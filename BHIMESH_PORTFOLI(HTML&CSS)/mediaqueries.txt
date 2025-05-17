@@ -1,0 +1,28 @@
+
+
+Media Queries:---------->
+    [lightsalmon] Mobile Devices: 319px — 480px
+    [powderblue] iPads and Tablets: 481px — 1200px
+    [limegreen] Laptops: 1201px — 1600px
+    [seagreen] Desktops: 1601px and more
+
+order:------->
+    About me...........................
+    My job........................
+    Practise sites.....................
+    Experience....................
+    Projects...................................
+    Language,........... skills, certifications
+    Education
+    Skills and interests
+    Contact me-------linkedin,email.
+
+_______________________________________________________
+
+ About Me: Your bio, skills, and technologies.............................
+ Projects: 3-5 best projects with demos and code links....................
+ Resume: Downloadable and online view
+ Contact Form: With social media links
+ Design: Dark mode, responsive, modern UI
+ Interactive Elements: Animations, hover effects
+ SEO & Analytics: For tracking and optimization

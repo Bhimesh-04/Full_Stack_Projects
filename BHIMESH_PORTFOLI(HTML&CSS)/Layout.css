@@ -1,0 +1,149 @@
+body
+{
+    /* background-color: #f7f1f0; */
+    /* background-color: seashell; */
+    background-color: black;
+    color:aliceblue;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+}
+
+.container1
+{
+    border:2px solid white;
+    border-radius: 20px;
+    height:570px;
+    display:flex;
+}
+
+.container1 > div
+{
+    height: 510px;
+}
+
+.container1 .part2
+{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container1 .part2 img
+{
+    height : 230px;
+    width : 218px;
+    border-radius:50%;
+}
+
+.container2
+{
+    width:1200px;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-top:10px;
+}
+.container2 > div
+{
+    height:240px;
+    width:226px;
+    background-color: black;
+    border:2px solid white;
+    margin:0px 0px 0px 0px;
+    padding:0px 0px 0px 0px;
+}
+
+.container3
+{
+    margin:150px 0px 0px 170px;
+}
+
+.container4
+{
+    display:flex;
+    flex-direction:column;
+    justify-content: center;
+    align-items: center;
+    margin:0px 0px 0px 0px;
+}
+.container4 div
+{
+    height: 155px;
+    width: 1000px;
+    padding-right: 18px;
+    margin-bottom: 52px;
+    border: 2px solid white;
+    border-radius: 24px;
+    background-color:black;
+}
+
+.container4 .part1
+{
+    display:flex;
+    flex-direction: row;
+}
+
+.container4 .part2
+{
+    display:flex;
+    flex-direction: row;
+}
+
+.container5
+{
+    display:flex;
+    margin:30px 0px 44px 0px;
+    flex-flow:row wrap;
+    justify-content:center;
+    gap:0px 60px;
+}
+.container5 img
+{
+    border:2px solid white;
+    border-radius:50%;
+    height:100px;
+    width:100px;
+}
+
+.container6
+{
+    display:flex;
+    flex-direction:column;
+    justify-content: center;
+    align-items: center;
+}
+.container6 .part1
+{
+    display:flex;
+    flex-direction:row;  
+}
+
+.container6 div
+{
+    height: 103px;
+    width: 1000px;
+    padding-right: 18px;
+    margin-bottom: 52px;
+    border: 2px solid white;
+    border-radius: 24px;
+    background-color:black;
+}
+
+footer
+{
+    background-color:white;
+    width:100%;
+    height:400px;
+    display: block;
+}
+/* .container7 div
+{
+    height: 103px;
+    width: 1000px;
+    border: 2px solid white;
+} */
