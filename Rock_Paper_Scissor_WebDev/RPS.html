@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ROCK-PAPER-SCISSORS</title>
+</head>
+<style>
+    body {
+        border: 2px solid black;
+        height: 95vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    #play_ground {
+        display: flex;
+        flex-direction: row;
+    }
+    .player {
+        border: 2px solid red;
+        height: 400px;
+        width: 400px;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+    }
+    .computer {
+        border: 2px solid red;
+        height: 400px;
+        width: 400px;
+    }
+    .options {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .options img {
+        border: 5px solid rgb(255, 255, 255);
+        height: 100px;
+        width: 190px;
+        margin: 1px;
+    }
+    .options img:hover {
+        border: 5px solid rgb(255, 238, 0);
+    }
+    .computer {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+</style>
+<body>
+    <h1 id="winner">Rock-Paper-Scissor</h1>
+    <div id="play_ground">
+        <div class="player">
+            <h3 class="option"><b>CHOOSE THE OPTION</b></h3>
+            <div class="options">
+                <img src="rock.png" onclick="decision('rock')">
+                <img src="paper.png" onclick="decision('paper')">
+                <img src="scissor.png" onclick="decision('scissor')">
+            </div>
+        </div>
+        <div class="computer">
+            <h3>COMPUTER</h3>
+            <div class="comp_img">
+                <img src="https://imgs.search.brave.com/o9S_utw3-4HH-TzG5s9cZOUai-sodvgHhIYwsjVML8U/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMTMz/NDQxOTk4OS9waG90/by8zZC1yZWQtcXVl/c3Rpb24tbWFyay5q/cGc_cz02MTJ4NjEy/Jnc9MCZrPTIwJmM9/YnBhR1Z1eXRfQUN1/aTN4SzhDdmtlb1ZR/Qy1qY3p4QU5aVE1Y/R0tBRTExRT0" height="290px" width="350px">
+            </div>
+            <h3 id="comp_op">I am going to Win !! 😈😈</h3>
+        </div>
+    </div>
+    <h1 class="output"><b>Who will be the WINNER ??</b></h1>
+
+    <script>
+        function decision(val) {
+            const option_selected = document.querySelector('.options');
+
+            if (val == "rock") {
+                document.getElementsByClassName('option')[0].innerHTML = "You Choosed ROCK!!";
+                option_selected.innerHTML = '<img src="rock.png" style="height:300px;width:350px;margin:1px;">';
+            }
+            else if (val == "paper") {
+                document.getElementsByClassName('option')[0].innerHTML = "You Choosed PAPER!!";
+                option_selected.innerHTML = '<img src="paper.png" style="height:300px;width:350px;margin:1px;">';
+            }
+            else if (val == "scissor") {
+                document.getElementsByClassName('option')[0].innerHTML = "You Choosed SCISSOR!!";
+                option_selected.innerHTML = '<img src="scissor.png" style="height:300px;width:350px;margin:1px;">';
+            }
+            else {
+                document.getElementsByClassName('option')[0].innerHTML = "You need to Choose!!";
+            }
+
+            var comp_choice = Math.floor(Math.random() * 3);
+            const arr = ['rock', 'paper', 'scissor'];
+            const arr_img = ['rock_rev.png', 'paper_rev.png', 'scissor_rev.png'];
+
+            document.querySelector(".comp_img img").src = arr_img[comp_choice];
+
+            if (
+                (val == 'rock' && arr[comp_choice] == 'scissor') ||
+                (val == 'scissor' && arr[comp_choice] == 'paper') ||
+                (val == 'paper' && arr[comp_choice] == 'rock')
+            ) {
+                document.getElementsByClassName('output')[0].innerHTML = 'You Won!!! 🎉';
+                document.getElementById('comp_op').innerHTML = 'OOPSSS!!'
+            }
+            else if (val === arr[comp_choice]) {
+                document.getElementsByClassName('output')[0].innerHTML = "It's a Draw 😐";
+                document.getElementById('comp_op').innerHTML = 'Are You Afraid To play AGAIN 😈!!'
+            }
+            else {
+                document.getElementsByClassName('output')[0].innerHTML = "You Lost 😢";
+                document.getElementById('comp_op').innerHTML = 'HaHaHa LooSer 🤣!!'
+            }
+        }
+    </script>
+</body>
+</html>
