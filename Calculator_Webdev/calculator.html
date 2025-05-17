@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Enhanced Calculator</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #f0f4f8;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      font-family: Arial, sans-serif;
+    }
+
+    .calculator {
+      background-color: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      width: 285px;
+      padding: 20px;
+    }
+
+    #display {
+      width: 100%;
+      height: 60px;
+      font-size: 28px;
+      padding: 10px;
+      text-align: right;
+      border: none;
+      border-radius: 5px;
+      background-color: #e9ecef;
+      margin-bottom: 20px;
+    }
+
+    .buttons {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 15px;
+    }
+
+    .button {
+      padding: 20px;
+      font-size: 20px;
+      border: none;
+      border-radius: 10px;
+      background-color: #f9c74f;
+      color: #333;
+      cursor: pointer;
+      transition: all 0.2s ease-in-out;
+    }
+
+    .button:hover {
+      background-color: #f9844a;
+      color: white;
+    }
+
+    .operator {
+      background-color: #90be6d;
+    }
+
+    .operator:hover {
+      background-color: #43aa8b;
+    }
+
+    .equal {
+      background-color: #577590;
+      color: white;
+      grid-column: span 2;
+    }
+
+    .equal:hover {
+      background-color: #277da1;
+    }
+
+    .clear {
+      background-color: #f94144;
+      color: white;
+      grid-column: span 2;
+    }
+
+    .clear:hover {
+      background-color: #d00000;
+    }
+  </style>
+</head>
+<body>
+  <div class="calculator">
+    <input type="text" id="display" disabled>
+
+    <div class="buttons">
+      <button class="button" onclick="press('7')">7</button>
+      <button class="button" onclick="press('8')">8</button>
+      <button class="button" onclick="press('9')">9</button>
+      <button class="button operator" onclick="press('/')">/</button>
+
+      <button class="button" onclick="press('4')">4</button>
+      <button class="button" onclick="press('5')">5</button>
+      <button class="button" onclick="press('6')">6</button>
+      <button class="button operator" onclick="press('*')">*</button>
+
+      <button class="button" onclick="press('1')">1</button>
+      <button class="button" onclick="press('2')">2</button>
+      <button class="button" onclick="press('3')">3</button>
+      <button class="button operator" onclick="press('-')">-</button>
+
+      <button class="button" onclick="press('0')">0</button>
+      <button class="button" onclick="press('.')">.</button>
+      <button class="button equal" onclick="calculate()">=</button>
+      <button class="button operator" onclick="press('+')">+</button>
+
+      <button class="button clear" onclick="clears()">C</button>
+    </div>
+  </div>
+
+  <script>
+    function press(val) {
+      document.getElementById('display').value += val;
+    }
+
+    function calculate() {
+      try {
+        const result = eval(document.getElementById('display').value);
+        document.getElementById('display').value = result;
+      } catch {
+        document.getElementById('display').value = 'Error';
+      }
+    }
+
+    function clears() {
+      document.getElementById('display').value = '';
+    }
+
+    // Keyboard Support
+    document.addEventListener('keydown', function(event) {
+      const key = event.key;
+
+      if (!isNaN(key) || ['+', '-', '*', '/', '.'].includes(key)) {
+        press(key);
+      } else if (key === 'Enter') {
+        event.preventDefault();
+        calculate();
+      } else if (key === 'Backspace') {
+        const display = document.getElementById('display');
+        display.value = display.value.slice(0, -1);
+      } else if (key.toLowerCase() === 'c') {
+        clears();
+      }
+    });
+  </script>
+</body>
+</html>
