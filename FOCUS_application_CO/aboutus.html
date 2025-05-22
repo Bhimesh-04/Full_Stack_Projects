@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Focus | About Us</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+     <link rel="icon" type="image/png" sizes="32x32" href="focus-logo.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="focus-logo.png">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: linear-gradient(135deg, #000000 0%, #1a1a1a 50%, #000000 100%);
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.05) 0%, transparent 60%),
+        radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.03) 0%, transparent 60%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .container {
+      position: relative;
+      z-index: 2;
+      padding: 2rem;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero-section {
+      text-align: center;
+      margin-bottom: 4rem;
+      animation: fadeInDown 0.8s ease-out;
+    }
+
+    .hero-title {
+      font-size: clamp(3rem, 8vw, 6rem);
+      font-weight: 800;
+      background: linear-gradient(135deg, #ffffff, #d1d5db, #6b7280);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 1rem;
+      letter-spacing: -0.02em;
+    }
+
+    .hero-subtitle {
+      font-size: 1.25rem;
+      color: rgba(255, 255, 255, 0.8);
+      font-weight: 300;
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2rem;
+      max-width: 1200px;
+      width: 100%;
+      margin-bottom: 3rem;
+    }
+
+    .member-card {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 24px;
+      padding: 2rem;
+      position: relative;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      animation: fadeInUp 0.8s ease-out forwards;
+      animation-delay: var(--delay, 0s);
+      opacity: 0;
+      transform: translateY(30px);
+    }
+
+    .member-card:nth-child(1) { --delay: 0.2s; }
+    .member-card:nth-child(2) { --delay: 0.4s; }
+
+    .member-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      border-radius: 24px;
+      padding: 2px;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.05));
+      mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      mask-composite: xor;
+      -webkit-mask-composite: xor;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .member-card:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 20px 40px rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .member-card:hover::before {
+      opacity: 1;
+    }
+
+    .member-header {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .member-avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      transition: all 0.3s ease;
+      filter: grayscale(100%);
+    }
+
+    .member-card:hover .member-avatar {
+      border-color: rgba(255, 255, 255, 0.5);
+      transform: scale(1.1);
+      filter: grayscale(0%);
+    }
+
+    .member-info h3 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 0.25rem;
+    }
+
+    .member-info p {
+      font-size: 1rem;
+      color: rgba(255, 255, 255, 0.6);
+      font-weight: 500;
+    }
+
+    .social-links {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 0.75rem;
+    }
+
+    .social-link {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1rem;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      color: white;
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .social-link::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+      transition: left 0.5s ease;
+    }
+
+    .social-link:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.3);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
+    }
+
+    .social-link:hover::before {
+      left: 100%;
+    }
+
+    .social-icon {
+      font-size: 1.2rem;
+    }
+
+    .back-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 1rem 2rem;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 50px;
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      animation: fadeInUp 1s ease-out 0.6s both;
+    }
+
+    .back-button:hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .floating-elements {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .floating-circle {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .floating-circle:nth-child(1) {
+      width: 60px;
+      height: 60px;
+      top: 20%;
+      left: 10%;
+      animation-delay: 0s;
+    }
+
+    .floating-circle:nth-child(2) {
+      width: 40px;
+      height: 40px;
+      top: 60%;
+      right: 15%;
+      animation-delay: 2s;
+    }
+
+    .floating-circle:nth-child(3) {
+      width: 80px;
+      height: 80px;
+      bottom: 20%;
+      left: 20%;
+      animation-delay: 4s;
+    }
+
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0px) rotate(0deg);
+      }
+      50% {
+        transform: translateY(-20px) rotate(180deg);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 1rem;
+      }
+      
+      .team-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+      
+      .member-card {
+        padding: 1.5rem;
+      }
+      
+      .social-links {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="floating-elements">
+    <div class="floating-circle"></div>
+    <div class="floating-circle"></div>
+    <div class="floating-circle"></div>
+  </div>
+
+  <div id="root"></div>
+
+  <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/babel-standalone@6.26.0/babel.min.js"></script>
+  
+  <script type="text/babel">
+    function AboutUs() {
+      const team = [
+        {
+          name: "K.V.K.Phani Kumar",
+          role: "Full Stack Developer |  Prompt specialist | AI & ML Specialization | Cloud Engineer | Hindu Priest",
+          photo: "my-profile.jpg",
+          links: [
+            { type: "LinkedIn", icon: "💼", url: "www.linkedin.com/in/kodukulla-phani-kumar-sharma-63a268302" },
+            { type: "Email", icon: "✉", url: "phanikumark715@gmail.com" },
+            { type: "Portfolio", icon: "🌐", url: "https://phanikumar-kodukulla.vercel.app/" }
+          ]
+        },
+        {
+          name: "Anaparthi Bhimesh",
+          role: "UI Desiging | AI & ML Specialization",
+          photo: "bheemesh.jpg",
+          links: [
+            { type: "LinkedIn", icon: "💼", url: "https://linkedin.com/in/anaparthibhimesh" },
+            { type: "Email", icon: "✉", url: "anaparthibhimesh2005@gmail.com" },
+            { type: "Portfolio", icon: "🌐", url: "index.html" }
+          ]
+        }
+      ];
+
+      return (
+        <div className="container">
+          <div className="hero-section">
+            <h1 className="hero-title">Meet Our Team</h1>
+            <p className="hero-subtitle">
+              Passionate creators building innovative solutions that make a difference
+            </p>
+          </div>
+
+          <div className="team-grid">
+            {team.map((member, index) => (
+              <div className="member-card" key={index}>
+                <div className="member-header">
+                  <img 
+                    className="member-avatar" 
+                    src={member.photo} 
+                    alt={member.name}
+                  />
+                  <div className="member-info">
+                    <h3>{member.name}</h3>
+                    <p>{member.role}</p>
+                  </div>
+                </div>
+                <div className="social-links">
+                  {member.links.map((link, linkIndex) => (
+                    <a 
+                      key={linkIndex}
+                      href={link.url} 
+                      className="social-link"
+                      target={link.type !== "Email" ? "_blank" : undefined}
+                      rel={link.type !== "Email" ? "noopener noreferrer" : undefined}
+                    >
+                      <span className="social-icon">{link.icon}</span>
+                      {link.type}
+                    </a>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <a href="index.html" className="back-button">
+            <span>←</span>
+            Back to Focus App
+          </a>
+        </div>
+      );
+    }
+
+    ReactDOM.render(<AboutUs />, document.getElementById("root"));
+  </script>
+</body>
+</html>

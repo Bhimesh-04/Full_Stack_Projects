@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Focus - Smart Student Task Scheduling System</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+     <link rel="icon" type="image/png" sizes="32x32" href="focus-logo.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="focus-logo.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            height: 100vh;
+            overflow: hidden;
+            background: url('Focus.png') center/cover no-repeat;
+            position: relative;
+        }
+        
+        /* Dark overlay for better text readability */
+        .bg-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: 1;
+        }
+        
+        /* Loading Screen */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            transition: opacity 0.8s ease-out;
+        }
+        
+        .loading-screen.fade-out {
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        /* Windows-style loading animation */
+        .windows-loader {
+            width: 60px;
+            height: 60px;
+            position: relative;
+            margin-bottom: 30px;
+        }
+        
+        .loader-ring {
+            width: 100%;
+            height: 100%;
+            border: 4px solid transparent;
+            border-top: 4px solid #0078d4;
+            border-radius: 50%;
+            animation: spin 1.2s linear infinite;
+        }
+        
+        .loader-dots {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            gap: 4px;
+        }
+        
+        .loader-dot {
+            width: 6px;
+            height: 6px;
+            background: #0078d4;
+            border-radius: 50%;
+            animation: pulse 1.4s ease-in-out infinite;
+        }
+        
+        .loader-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        
+        .loader-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+        
+        .loading-text {
+            color: #ffffff;
+            font-size: 16px;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        @keyframes pulse {
+            0%, 80%, 100% { 
+                transform: scale(0.8);
+                opacity: 0.5;
+            }
+            40% { 
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+        
+        /* Main Content */
+        .main-content {
+            position: relative;
+            z-index: 2;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            padding-left: 10%;
+            opacity: 0;
+            transition: opacity 1s ease-in;
+        }
+        
+        .main-content.show {
+            opacity: 1;
+        }
+        
+        .text-container {
+            text-align: left;
+            max-width: 600px;
+        }
+        
+        .main-title {
+            font-size: 4.5rem;
+            font-weight: 700;
+            color: #ffffff;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+            margin-bottom: 20px;
+            line-height: 1.1;
+        }
+        
+        .subtitle {
+            font-size: 1.8rem;
+            font-weight: 300;
+            color: #f0f0f0;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+            line-height: 1.4;
+        }
+        
+        /* Typewriter Effect */
+        .typewriter {
+            overflow: hidden;
+            white-space: nowrap;
+            border-right: 3px solid #ffffff;
+            animation: blink-caret 0.8s infinite;
+        }
+        
+        .typewriter.typing {
+            animation: none;
+        }
+        
+        .typewriter.finished {
+            border-right: none;
+        }
+        
+        @keyframes blink-caret {
+            0%, 50% { border-color: #ffffff; }
+            51%, 100% { border-color: transparent; }
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .main-content {
+                justify-content: center;
+                padding: 0 20px;
+                text-align: center;
+            }
+            
+            .text-container {
+                text-align: center;
+            }
+            
+            .main-title {
+                font-size: 3rem;
+            }
+            
+            .subtitle {
+                font-size: 1.4rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .main-title {
+                font-size: 2.5rem;
+            }
+            
+            .subtitle {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Overlay -->
+    <div class="bg-overlay"></div>
+    
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="windows-loader">
+            <div class="loader-ring"></div>
+            <div class="loader-dots">
+                <div class="loader-dot"></div>
+                <div class="loader-dot"></div>
+                <div class="loader-dot"></div>
+            </div>
+        </div>
+        <div class="loading-text">Loading...</div>
+    </div>
+    
+    <!-- Main Content -->
+    <div class="main-content" id="mainContent">
+        <div class="text-container">
+            <h1 class="main-title typewriter" id="mainTitle"></h1>
+            <p class="subtitle typewriter" id="subtitle"></p>
+        </div>
+    </div>
+    
+    <!-- Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- jQuery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    
+    <script>
+        $(document).ready(function() {
+            // Loading duration (3 seconds)
+            const loadingDuration = 3000;
+            
+            // Text to be typed
+            const mainText = "Focus";
+            const subtitleText = "A smart student task scheduling system";
+            
+            // Typewriter function
+            function typeWriter(element, text, speed = 100, callback = null) {
+                let i = 0;
+                element.addClass('typing');
+                element.text('');
+                
+                function type() {
+                    if (i < text.length) {
+                        element.text(element.text() + text.charAt(i));
+                        i++;
+                        setTimeout(type, speed);
+                    } else {
+                        element.removeClass('typing');
+                        element.addClass('finished');
+                        if (callback) {
+                            setTimeout(callback, 500);
+                        }
+                    }
+                }
+                type();
+            }
+            
+            // Start the sequence after loading
+            setTimeout(function() {
+                // Fade out loading screen
+                $('#loadingScreen').addClass('fade-out');
+                
+                // Show main content
+                setTimeout(function() {
+                    $('#mainContent').addClass('show');
+                    
+                    // Start typing main title
+                    setTimeout(function() {
+                        typeWriter($('#mainTitle'), mainText, 150, function() {
+                            // Start typing subtitle after main title is done
+                            typeWriter($('#subtitle'), subtitleText, 80, function() {
+                                // Wait 2 seconds after all typewriter effects complete, then navigate
+                                setTimeout(function() {
+                                    window.location.href = 'intro.html';
+                                }, 2000);
+                            });
+                        });
+                    }, 500);
+                    
+                }, 800);
+                
+            }, loadingDuration);
+            
+            // Remove loading screen from DOM after fade out
+            setTimeout(function() {
+                $('#loadingScreen').remove();
+            }, loadingDuration + 1500);
+        });
+        
+        // Handle window resize for responsive design
+        $(window).resize(function() {
+            // Adjust layout if needed
+        });
+        
+        // Preload background image
+        const img = new Image();
+        img.src = 'Focus.png';
+    </script>
+</body>
+</html>
